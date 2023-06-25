@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>User Notes</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .btn {
+            background-color: darkblue;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="navbar :: navbar"></div>
 <div class="container mt-5">
     <h1>Welcome, <span th:text="${username}"></span>!</h1>
-    <a href="/add-note" class="btn btn-primary mb-3">Add Note</a>
+    <a href="/add-note" class="btn btn-primary mb-3">Dodaj notatkę</a>
     <table class="table table-striped">
         <thead>
         <tr>
