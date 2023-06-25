@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Note</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="navbar :: navbar"></div>
+<div class="container mt-5">
+    <h2>Add a new note</h2>
+    <form th:action="@{/notes/add}" th:object="${note}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" th:field="*{title}" id="title" class="form-control" required>
+            <p th:errors="*{title}" class="text-danger"
+               th:if="${#fields.hasErrors('title')}">
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="details">Details</label>
+            <textarea th:field="*{details}" id="details" class="form-control" required></textarea>
+            <p th:errors="*{details}" class="text-danger"
+               th:if="${#fields.hasErrors('details')}">
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select th:field="*{categoryName}" id="category" class="form-control">
+                <option value="">-- Select Category --</option>
+                <option th:each="category : ${categories}" th:value="${category.name}"
+                        th:text="${category.name}"></option>
+            </select>
+            <p th:errors="*{categoryName}" class="text-danger" th:if="${#fields.hasErrors('categoryName')}"></p>
+        </div>
+        <div class="form-group">
+            <label for="isShared">Is Shared</label>
+            <input type="checkbox" th:field="*{isShared}" id="isShared" class="form-check">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

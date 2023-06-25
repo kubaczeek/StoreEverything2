@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Notes</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="navbar :: navbar"></div>
+<div class="container mt-5">
+    <a href="/add-note" class="btn btn-primary mb-3">Add Note</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Details</th>
+            <th>Author Name</th>
+            <th>Created Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="note : ${notes}">
+            <td th:text="${note.id}"></td>
+            <td th:text="${note.title}"></td>
+            <td th:text="${note.categoryName}"></td>
+            <td th:text="${note.details}"></td>
+            <td th:text="${note.authorName}"></td>
+            <td th:text="${note.createdDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

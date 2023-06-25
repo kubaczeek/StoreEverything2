@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
+    <a class="navbar-brand" href="#">Store Everything</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-note">
+                <a class="nav-link" th:href="@{/user-notes}">My Notes</a>
+            </li>
+            <li class="nav-note">
+                <a class="nav-link" th:href="@{/shared-notes}">Shared Notes</a>
+            </li>
+            <li class="nav-note">
+                <a class="nav-link" th:href="@{/add-note}">Add Note</a>
+            </li>
+            <li class="nav-note">
+                <a class="nav-link" th:href="@{/add-category}">Add Category</a>
+            </li>
+            <li class="nav-note">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+</body>
+</html>
