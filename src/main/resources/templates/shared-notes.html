@@ -9,12 +9,15 @@
             background-color: darkblue;
             color: white;
         }
+        .btn-black {
+            background-color: black;
+            color: white;
+        }
     </style>
 </head>
 <body>
 <div th:replace="navbar :: navbar"></div>
 <div class="container mt-5">
-    <a href="/add-note" class="btn btn-primary mb-3">Add Note</a>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -24,6 +27,7 @@
             <th>Details</th>
             <th>Author Name</th>
             <th>Created Date</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +38,10 @@
             <td th:text="${note.details}"></td>
             <td th:text="${note.authorName}"></td>
             <td th:text="${note.createdDate}"></td>
+            <td>
+                <a th:if="${note.authorName == username}" th:href="@{/notes/delete/{id}(id=${note.id})}" class="btn btn-danger">Usuń</a>
+                <button th:unless="${note.authorName == username}" class="btn btn-black" disabled>Brak uprawnień</button>
+            </td>
         </tr>
         </tbody>
     </table>

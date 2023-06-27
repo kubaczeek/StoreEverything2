@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class NoteService {
     private final NoteRepository noteRepository;
     private final UserService userService;
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     public NoteService(NoteRepository noteRepository, UserService userService, CategoryService categoryService) {
         this.noteRepository = noteRepository;
@@ -27,6 +27,21 @@ public class NoteService {
         User user = this.userService.getCurrentUser();
         Category category = this.categoryService.getCategoryByName(noteDto.getCategoryName());
         Note note = new Note();
+        note.setTitle(noteDto.getTitle());
+        note.setDetails(noteDto.getDetails());
+        note.setAuthorName(user.getName());
+        note.setCreatedDate(LocalDate.now());
+        note.setIsShared(noteDto.getIsShared());
+        note.setAuthor(user);
+        note.setCategory(category);
+        note.setCategoryName(noteDto.getCategoryName());
+        this.noteRepository.save(note);
+    }
+
+    public void updateNote(NoteDto noteDto) {
+        Note note = noteRepository.findById(noteDto.getId()).orElse(null);
+        User user = this.userService.getCurrentUser();
+        Category category = this.categoryService.getCategoryByName(noteDto.getCategoryName());
         note.setTitle(noteDto.getTitle());
         note.setDetails(noteDto.getDetails());
         note.setAuthorName(user.getName());
@@ -51,6 +66,13 @@ public class NoteService {
     public List<NoteDto> getSharedNotes() {
         List<Note> notes = this.noteRepository.getSharedNotes();
         return this.mapNotesToDtos(notes);
+    }
+
+    public NoteDto findById(Long id) {
+        Note note = noteRepository.findById(id).orElse(null);
+        if (note == null)
+            throw new RuntimeException("Note not found");
+        return new NoteDto(note.getId(), note.getTitle(), note.getDetails(), note.getCategoryName(), note.getIsShared(), note.getCreatedDate(), note.getAuthorName());
     }
 
     List<NoteDto> mapNotesToDtos(List<Note> notes) {

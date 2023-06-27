@@ -80,4 +80,26 @@ public class NoteController {
         logger.info("/shared-notes");
         return "shared-notes";
     }
+
+    @GetMapping("/notes/share/{id}")
+    public String shareNote(@PathVariable("id") Long id) {
+        NoteDto note = noteService.findById(id);
+        if (note != null) {
+            note.setIsShared(true);
+            noteService.updateNote(note);
+            logger.info("/notes/share/"+id);
+        }
+        return "redirect:/user-notes";
+    }
+
+    @GetMapping("/notes/unshare/{id}")
+    public String unshareNote(@PathVariable("id") Long id) {
+        NoteDto note = noteService.findById(id);
+        if (note != null) {
+            note.setIsShared(false);
+            noteService.updateNote(note);
+            logger.info("/notes/unshare/"+id);
+        }
+        return "redirect:/user-notes";
+    }
 }

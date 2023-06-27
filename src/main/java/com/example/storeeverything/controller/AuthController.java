@@ -24,15 +24,16 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping({"/index"})
+    @GetMapping({"home", "/index", "/", ""})
     public String home(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("username", username);
-        return "index";
+        return "redirect:/login";
     }
 
     @GetMapping({"/login"})
     public String login() {
+        logger.info("/login");
         return "login";
     }
 
@@ -40,6 +41,7 @@ public class AuthController {
     public String showRegistrationForm(Model model) {
         UserDto user = new UserDto();
         model.addAttribute("user", user);
+        logger.info("/register");
         return "register";
     }
 
@@ -47,15 +49,18 @@ public class AuthController {
     public String registration(@ModelAttribute("user") @Valid UserDto userDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("user", userDto);
+            logger.info("/register");
             return "/register";
         } else {
             User existingUser = this.userService.findUserByName(userDto.getName());
             if (existingUser != null) {
-                result.rejectValue("name", (String)null, "There is already an account registered with the same name");
+                result.rejectValue("name", null, "There is already an account registered with the same name");
                 model.addAttribute("user", userDto);
+                logger.info("/register");
                 return "/register";
             } else {
                 this.userService.saveUser(userDto);
+                logger.info("/register?success");
                 return "redirect:/register?success";
             }
         }

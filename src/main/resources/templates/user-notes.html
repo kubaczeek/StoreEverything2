@@ -26,6 +26,7 @@
             <th>Author Name</th>
             <th>Created Date</th>
             <th>Shared</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -37,6 +38,11 @@
             <td th:text="${note.authorName}"></td>
             <td th:text="${note.createdDate}"></td>
             <td th:text="${note.isShared ? 'Yes' : 'No'}"></td>
+            <td>
+                <a th:href="@{/notes/delete/{id}(id=${note.id})}" class="btn btn-danger">Usuń</a>
+                <a th:if="${!note.isShared}" th:href="@{/notes/share/{id}(id=${note.id})}" class="btn btn-dark">Share</a>
+                <a th:if="${note.isShared}" th:href="@{/notes/unshare/{id}(id=${note.id})}" class="btn btn-dark">Unshare</a>
+            </td>
         </tr>
         </tbody>
     </table>
